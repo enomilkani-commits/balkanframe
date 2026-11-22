@@ -1,0 +1,320 @@
+
+const C=["Albania","Bosnia and Herzegovina","Bulgaria","Croatia","Greece","Kosovo","Montenegro","North Macedonia","Romania","Serbia","Slovenia"];
+const FUND=[
+["Albania","National Center of Cinematography (QKK)","Qendra Kombëtare e Kinematografisë","Production, development, screenwriting, minority co-production, distribution","Rr. Aleksandër Moisiu 77, Kinostudio, Tirana","https://qkk.al"],
+["Bosnia and Herzegovina","Film Fund Sarajevo","Fondacija za kinematografiju Sarajevo","Feature, documentary, short, development (Federation of BiH)","Sarajevo","https://www.fondacijakinematografija.ba"],
+["Bosnia and Herzegovina","Film Fund of Republika Srpska","Fond za razvoj kinematografije RS","Production support in Republika Srpska","Banja Luka",""],
+["Bulgaria","Bulgarian National Film Center","Изпълнителна агенция Национален филмов център","Feature, documentary, animation, debut, co-production; cash rebate","Sofia","https://www.nfc.bg"],
+["Croatia","Croatian Audiovisual Centre (HAVC)","Hrvatski audiovizualni centar","Development, production, co-production, festivals, 25% cash rebate","Zagreb","https://www.havc.hr"],
+["Greece","Hellenic Film & Audiovisual Center – Creative Greece (EKKOMED)","Ελληνικό Κέντρο Κινηματογράφου, Οπτικοακουστικών Μέσων και Δημιουργίας","Selective funding (screenwriting, development, production, debut, minority co-production) and the 40% cash rebate","Athens","https://www.ekkomed.gr"],
+["Kosovo","Kosovo Cinematography Center (QKK)","Qendra Kinematografike e Kosovës","Feature, documentary, short, animation, co-production; rebate scheme","Qafa-Galeria 15, Prishtina","https://qkk-rks.com"],
+["Montenegro","Film Centre of Montenegro","Filmski centar Crne Gore","Production, co-production, development; production incentives","Podgorica","https://fccg.me"],
+["North Macedonia","North Macedonia Film Agency","Агенција за филм на Република Северна Македонија","Production, co-production, development; 20% production rebate","Skopje","https://filmfund.gov.mk"],
+["Romania","Romanian Film Centre (CNC)","Centrul Național al Cinematografiei","Selective production funding, debut, co-production, distribution","Bucharest","https://www.cnc.gov.ro"],
+["Serbia","Film Center Serbia","Filmski centar Srbije","Feature, documentary, short, animation, co-production, development","Belgrade","https://www.fcs.rs"],
+["Slovenia","Slovenian Film Centre","Slovenski filmski center","Development, production, co-production; 25% cash rebate","Ljubljana","https://www.film-center.si"],
+["Slovenia","Viba Film Studio","","Public production services and equipment","Ljubljana","https://www.vibafilm.si"]
+];
+const INC=[
+["Albania","Cash rebate proposed in the 2026 draft Law on Cinematography and Audiovisual","In public consultation — not yet in force","https://qkk.al"],
+["Bosnia and Herzegovina","No national rebate (entity-level schemes)","—",""],
+["Bulgaria","Cash rebate","25%, cap €5m per project (since 2026)","https://www.nfc.bg"],
+["Croatia","Cash rebate","25% (+5% in less-developed regions)","https://filmingincroatia.hr"],
+["Greece","Cash Rebate Greece (CRGR)","40%, cap €8m per project","https://www.ekkomed.gr"],
+["Kosovo","Rebate programme listed by the Kosovo Cinematography Center","Check KCC for current terms","https://qkk-rks.com"],
+["Montenegro","Cash rebate","25%, min. spend €100,000","https://fccg.me/en/cash-rebate-25"],
+["North Macedonia","Cash rebate","20%","https://filmfund.gov.mk"],
+["Romania","Cash rebate (OFIC)","30%, cap €10m per project; extended to 2029",""],
+["Serbia","Cash rebate","25%; 30% above €5m spend; 20% commercials","https://www.fcs.rs/en/industry-guide/film-incentives/"],
+["Slovenia","Cash rebate","25%","https://www.film-center.si"]
+];
+const INTL=[
+["Eurimages","Council of Europe fund for co-production, distribution and exhibition. All 11 countries are members.","Co-production","https://www.coe.int/en/web/eurimages"],
+["Creative Europe MEDIA","EU programme for development, slates, distribution, training and festivals. Open to most countries in the region.","Development · distribution","https://culture.ec.europa.eu/creative-europe"],
+["CineLink – Sarajevo FF","Co-production market and work-in-progress showcase at the Sarajevo Film Festival.","Pitching forum","https://www.sff.ba"],
+["Agora – Thessaloniki IFF","Industry hub with Crossroads co-production forum and Works in Progress.","Pitching forum","https://www.filmfestival.gr"],
+["Connecting Cottbus","East-West co-production market focused on Central & Eastern Europe.","Pitching forum","https://www.connecting-cottbus.de"],
+["When East Meets West","Trieste co-production forum, regularly featuring Balkan focus countries.","Pitching forum","https://wemw.it"],
+["Midpoint Institute","Script and project development workshops for Central & Eastern European filmmakers.","Development","https://www.midpoint-institute.eu"],
+["Balkan Documentary Center","Training and development for documentary filmmakers from the region.","Documentary","https://www.bdcwebsite.com"]
+];
+const FEST=[
+["Sarajevo Film Festival","Bosnia and Herzegovina",8,"Leading regional festival; competition, CineLink"],
+["Thessaloniki International Film Festival","Greece",11,"Features, Agora market"],
+["Thessaloniki Documentary Festival","Greece",3,"Documentary"],
+["Drama International Short Film Festival","Greece",9,"Short film"],
+["Tirana International Film Festival","Albania",10,"Features & shorts"],
+["Balkan Film Food Festival","Albania",9,"Film & food, Pogradec"],
+["Durrës International Film Summerfest","Albania",8,"Open-air summer festival"],
+["DokuFest","Kosovo",8,"Documentary & short, Prizren"],
+["PriFest","Kosovo",6,"Features, Prishtina"],
+["Herceg Novi Film Festival","Montenegro",8,"Regional features"],
+["Manaki Brothers ICFF","North Macedonia",9,"Cinematography, Bitola"],
+["Skopje Film Festival","North Macedonia",3,"Features"],
+["Sofia International Film Festival","Bulgaria",3,"Features, Sofia Meetings"],
+["Golden Rose Film Festival","Bulgaria",9,"Bulgarian features, Varna"],
+["Transilvania IFF (TIFF)","Romania",6,"Features, Cluj-Napoca"],
+["Les Films de Cannes à Bucarest","Romania",10,"Showcase"],
+["Astra Film Festival","Romania",10,"Documentary, Sibiu"],
+["FEST Belgrade","Serbia",2,"Features"],
+["Palić European Film Festival","Serbia",7,"European cinema"],
+["Kustendorf","Serbia",1,"Shorts, Drvengrad"],
+["Pula Film Festival","Croatia",7,"Croatian & international, Arena"],
+["Motovun Film Festival","Croatia",7,"Independent features"],
+["Zagreb Film Festival","Croatia",11,"Debuts"],
+["ZagrebDox","Croatia",4,"Documentary"],
+["Animafest Zagreb","Croatia",6,"Animation"],
+["Festival of Slovenian Film","Slovenia",9,"National, Portorož"],
+["Ljubljana International Film Festival (LIFFe)","Slovenia",11,"Features"],
+["Isola Cinema","Slovenia",6,"Independent, Izola"]
+];
+const SCH=[
+["Albania","University of the Arts, Tirana","Universiteti i Arteve","Film & TV directing, acting, cinematography, film studies","Tirana","https://www.uart.edu.al"],
+["Albania","Marubi Academy of Film and Multimedia","Akademia e Filmit dhe Multimedias Marubi","Private film school: directing, screenwriting, camera, editing","Tirana",""],
+["Bosnia and Herzegovina","Academy of Performing Arts Sarajevo","Akademija scenskih umjetnosti","Film & TV directing, production, dramaturgy, acting","Sarajevo","https://www.asu.unsa.ba"],
+["Bosnia and Herzegovina","Academy of Arts, University of Banja Luka","Akademija umjetnosti","Drama and media arts","Banja Luka",""],
+["Bulgaria","National Academy for Theatre and Film Arts (NATFA)","НАТФИЗ „Кръстьо Сарафов“","Film directing, cinematography, screenwriting, animation, acting","Sofia","https://natfiz.bg"],
+["Bulgaria","New Bulgarian University – Cinema, Advertising & Show Business","","Film and TV production","Sofia","https://www.nbu.bg"],
+["Croatia","Academy of Dramatic Art, Zagreb (ADU)","Akademija dramske umjetnosti","Film & TV directing, cinematography, editing, production, screenwriting","Zagreb","https://www.adu.unizg.hr"],
+["Croatia","Academy of Arts and Culture, Osijek","Akademija za umjetnost i kulturu","Media arts, acting","Osijek",""],
+["Greece","Aristotle University – School of Film","Τμήμα Κινηματογράφου ΑΠΘ","Directing, screenwriting, cinematography, film theory","Thessaloniki","https://www.film.auth.gr"],
+["Greece","Stavrakos Film School","Σχολή Σταυράκου","Private professional film & TV school","Athens",""],
+["Kosovo","Faculty of Arts, University of Prishtina","Fakulteti i Arteve","Film & TV directing, acting, dramaturgy","Prishtina",""],
+["Montenegro","Faculty of Dramatic Arts, Cetinje","Fakultet dramskih umjetnosti","Film & TV directing, production, acting","Cetinje",""],
+["North Macedonia","Faculty of Dramatic Arts, Skopje","Факултет за драмски уметности","Film & TV directing, cinematography, acting","Skopje",""],
+["Romania","UNATC “I.L. Caragiale”","Universitatea Națională de Artă Teatrală și Cinematografică","Film directing, cinematography, screenwriting, editing, animation","Bucharest","https://unatc.ro"],
+["Romania","Babeș-Bolyai University – Faculty of Theatre and Film","","Film, photography, media","Cluj-Napoca",""],
+["Serbia","Faculty of Dramatic Arts, Belgrade (FDU)","Fakultet dramskih umetnosti","Film & TV directing, camera, editing, production, screenwriting","Belgrade","https://www.fdu.bg.ac.rs"],
+["Serbia","Academy of Arts, Novi Sad","Akademija umetnosti","Dramatic and audiovisual arts","Novi Sad",""],
+["Slovenia","Academy of Theatre, Radio, Film and TV (AGRFT)","Akademija za gledališče, radio, film in televizijo","Film & TV directing, cinematography, editing, acting","Ljubljana","https://www.agrft.uni-lj.si"],
+["Slovenia","University of Nova Gorica – School of Arts","Akademija umetnosti","Film, animation, new media","Nova Gorica",""]
+];
+const PPL=[
+["Albania","Kujtim Çashku","dir","Ballë për ballë (1979, co-dir.), Kolonel Bunker (1996), Syri magjik (2005)","Founder of Marubi Academy and Tirana IFF"],
+["Albania","Piro Milkani","dir","Ngadhnjim mbi vdekjen (1967, co-dir.), Ballë për ballë (1979, co-dir.)","Leading director of the classic Albanian cinema"],
+["Albania","Gjergj Xhuvani","dir","Slogans (2001), Dear Enemy (2004)","Slogans won awards at Cannes Directors' Fortnight and Tokyo"],
+["Albania","Bujar Alimani","dir","Amnesty (2011), Delegation (2023)","Amnesty premiered at Berlinale Forum"],
+["Albania","Margarita Xhepa","act","Lulëkuqet mbi mure, Tana","People's Artist, icon of Albanian screen and stage"],
+["Albania","Arben Bajraktaraj","act","Harry Potter series, Taken, Amnesty","Internationally working Albanian actor"],
+["Kosovo","Blerta Basholli","dir","Hive (2021)","Three awards at Sundance 2021, incl. Grand Jury Prize"],
+["Kosovo","Kaltrina Krasniqi","dir","Vera Dreams of the Sea (2021)","Best Film, Orizzonti Extra – Venice 2021"],
+["Kosovo","Isa Qosja","dir","Proka (1985), Three Windows and a Hanging (2014)","Pioneer of Kosovo cinema"],
+["Kosovo","Bekim Fehmiu","act","I Even Met Happy Gypsies (1967), The Adventurers (1970)","First Eastern European star in Hollywood"],
+["Kosovo","Yllka Gashi","act","Hive (2021)","Lead in Sundance-winning Hive"],
+["Bosnia and Herzegovina","Danis Tanović","dir","No Man's Land (2001), An Episode in the Life of an Iron Picker (2013)","Oscar for Best Foreign Language Film; Best Screenplay at Cannes"],
+["Bosnia and Herzegovina","Jasmila Žbanić","dir","Grbavica (2006), Quo Vadis, Aida? (2020)","Golden Bear 2006; Oscar nomination 2021"],
+["Bosnia and Herzegovina","Aida Begić","dir","Snow (2008), Children of Sarajevo (2012)","Grand Prix, Critics' Week Cannes 2008"],
+["Bosnia and Herzegovina","Emir Hadžihafizbegović","act","Remake, Quo Vadis, Aida?","Leading Bosnian actor"],
+["Serbia","Emir Kusturica","dir","When Father Was Away on Business (1985), Underground (1995)","Two Palmes d'Or; founder of Küstendorf festival"],
+["Serbia","Želimir Žilnik","dir","Early Works (1969)","Golden Bear 1969"],
+["Serbia","Goran Paskaljević","dir","Cabaret Balkan (1998)","FIPRESCI Prize, Venice"],
+["Serbia","Mirjana Karanović","act","When Father Was Away on Business, Grbavica, A Good Wife","Major regional actress and director"],
+["Serbia","Predrag 'Miki' Manojlović","act","When Father Was Away on Business, Underground","Leading actor of Yugoslav and European cinema"],
+["Croatia","Antoneta Alamat Kusijanović","dir","Murina (2021)","Caméra d'Or, Cannes 2021"],
+["Croatia","Dalibor Matanić","dir","The High Sun (2015)","Jury Prize, Un Certain Regard, Cannes 2015"],
+["Croatia","Rade Šerbedžija","act","Before the Rain, Eyes Wide Shut, Snatch","Internationally known actor"],
+["Croatia","Goran Višnjić","act","Welcome to Sarajevo, ER, The Girl with the Dragon Tattoo","Croatian actor in Hollywood"],
+["Montenegro","Veljko Bulajić","dir","Battle of Neretva (1969)","Oscar-nominated Yugoslav epic"],
+["Montenegro","Ivan Salatić","dir","You Have the Night (2018)","Premiered at Venice Critics' Week"],
+["North Macedonia","Milcho Manchevski","dir","Before the Rain (1994)","Golden Lion, Venice; Oscar nomination"],
+["North Macedonia","Teona Strugar Mitevska","dir","God Exists, Her Name Is Petrunya (2019)","Berlinale competition; LUX Prize"],
+["North Macedonia","Tamara Kotevska & Ljubomir Stefanov","dir","Honeyland (2019)","Two Oscar nominations; three Sundance awards"],
+["North Macedonia","Labina Mitevska","act","Before the Rain, Welcome to Sarajevo","Actress and producer"],
+["Bulgaria","Kristina Grozeva & Petar Valchanov","dir","The Lesson (2014), Glory (2016)","Awards at Toronto, Locarno, San Sebastián"],
+["Bulgaria","Stephan Komandarev","dir","The World Is Big and Salvation Lurks Around the Corner (2008), Directions (2017)","Oscar shortlist; Un Certain Regard"],
+["Bulgaria","Maria Bakalova","act","Borat Subsequent Moviefilm (2020), The Apprentice (2024)","Oscar nomination, Best Supporting Actress"],
+["Romania","Cristian Mungiu","dir","4 Months, 3 Weeks and 2 Days (2007), Beyond the Hills (2012)","Palme d'Or 2007; Best Director Cannes 2016"],
+["Romania","Cristi Puiu","dir","The Death of Mr. Lazarescu (2005), Sieranevada (2016)","Un Certain Regard Prize 2005"],
+["Romania","Radu Jude","dir","Aferim! (2015), Bad Luck Banging or Loony Porn (2021)","Golden Bear 2021; Silver Bear 2015"],
+["Romania","Corneliu Porumboiu","dir","12:08 East of Bucharest (2006), Police, Adjective (2009)","Caméra d'Or 2006"],
+["Romania","Vlad Ivanov","act","4 Months, 3 Weeks and 2 Days, Police, Adjective","Leading actor of the Romanian New Wave"],
+["Greece","Theo Angelopoulos","dir","Landscape in the Mist (1988), Eternity and a Day (1998)","Palme d'Or 1998"],
+["Greece","Yorgos Lanthimos","dir","Dogtooth (2009), The Favourite (2018), Poor Things (2023)","Golden Lion 2023; multiple Oscar nominations"],
+["Greece","Athina Rachel Tsangari","dir","Attenberg (2010), Chevalier (2015)","Coppa Volpi for Attenberg's lead, Venice 2010"],
+["Greece","Melina Mercouri","act","Never on Sunday (1960)","Best Actress, Cannes 1960; later Minister of Culture"],
+["Greece","Irene Papas","act","Zorba the Greek, Z, Electra","Icon of Greek and world cinema"],
+["Slovenia","Jan Cvitkovič","dir","Bread and Milk (2001), Gravehopping (2005)","Lion of the Future, Venice 2001"],
+["Slovenia","Damjan Kozole","dir","Spare Parts (2003), Nightlife (2016)","Best Director, Karlovy Vary 2016"],
+["Slovenia","Urša Menart","dir","My Last Year as a Loser (2016), Wake Me (2022)","Leading voice of new Slovenian cinema"]
+];
+// Additions compiled from Wikipedia (Cinema of … / List of … actors pages), Nov 2026
+PPL.push(
+["Albania","Kristaq Dhamo","dir","Tana (1958)","Directed the first Albanian feature film"],
+["Albania","Xhanfise Keko","dir","Children's and feature films, Kinostudio","One of the few women directors of the communist era"],
+["Albania","Viktor Stratoberdha","dir","Early Albanian filmmaker","Imprisoned 1956–1990"],
+["Albania","Endri Keko","dir","Forward, Side by Side (1964, co-dir.)","First Sino-Albanian co-production"],
+["Albania","Erenik Beqiri","dir","The Van (2019)","Short Film Palme d'Or nominee, Cannes 2019"],
+["Albania","Merita Sokoli","act","Albanian cinema","First female actor in Albanian cinema"],
+["Albania","Aleksandër Moisiu (1879–1935)","act","European stage and silent film","Star of the German-language stage"],
+...[["Pjetër Gjoka","1912–1982"],["Sandër Prosi","1920–1985"],["Pandi Raidhi","1921–1999"],["Naim Frashëri","1923–1975"],["Kadri Roshi","1924–2007"],["Sulejman Pitarka","1924–2007"],["Ndrek Luca","1927–1995"],["Luan Qerimi","1929–2018"],["Skënder Sallaku","1935–2014"],["Albert Vërria","1936–2015"],["Dhimitër Orgocka","1936–2021"],["Reshat Arbana","b. 1940"],["Robert Ndrenika","b. 1942"],["Agim Shuka","1942–1992"],["Aleko Prodani","1942–2006"],["Andon Qesari","1942–2021"],["Llazi Sërbo","1945–2010"],["Bujar Lako","1946–2016"],["Roland Trebicka","1947–2013"],["Vasillaq Vangjeli","1948–2011"],["Agim Qirjaqi","1950–2010"],["Esat Teliti","b. 1950"],["Edmond Budina","b. 1952"],["Ndriçim Xhepa","b. 1957"],["Pjetër Malota","b. 1959"],["Ilir Jaçellari","b. 1970"],["Laert Vasili","b. 1974"],["Orli Shuka","b. 1976"],["Blerim Destani","b. 1981"],["Nik Xhelilaj","b. 1983"],["Marie Logoreci","1920–1988"],["Liza Vorfi","1924–2011"],["Violeta Manushi","1926–2007"],["Drita Pelingu","1926–2013"],["Esma Agolli","1928–2010"],["Melpomeni Çobani","1928–2016"],["Tinka Kurti","b. 1932"],["Ferial Alibali","1933–2011"],["Antoneta Papapavli","1938–2013"],["Yllka Mujo","b. 1953"],["Rajmonda Bulku","b. 1958"],["Luli Bitri","b. 1976"],["Flonja Kodheli",""]].map(a=>["Albania",a[0]+(a[1]?" ("+a[1]+")":""),"act","Albanian film and stage",""]),
+["Kosovo","Azem Shkreli","dir","Loja e rufaive (1977)","Led Kosovafilm in its most successful period"],
+["Kosovo","Ekrem Kryeziu","dir","Kur pranvera vonohet (1980), Gjurmët e bardha (1980)","Later director of Kosovafilm"],
+["Kosovo","Besim Sahatçiu","dir","Swelling River (1981)",""],
+["Kosovo","Agim Sopi","dir","Njeriu prej dheut (1984)",""],
+["Kosovo","Visar Morina","dir","Exile (2020)","Top prize, Sarajevo FF 2020"],
+["Kosovo","Arta Dobroshi","act","Lorna's Silence (2008), Three Worlds (2012)","European Film Award nomination 2008"],
+["Kosovo","Faruk Begolli","act","Pogled u zenicu Sunca (1966)","Yugoslav screen star"],
+["Kosovo","Enver Petrovci","act","Rojet e mjegullës (1988)",""],
+["Kosovo","Çun Lajçi","act","Rojet e mjegullës (1988)",""],
+["Kosovo","Xhevat Qorraj","act","Rojet e mjegullës (1988)","Also headed Kosovafilm"],
+...["Zlatko Topčić","Dino Mustafić","Ahmed Imamović","Ademir Kenović","Pjer Žalica","Mirza Idrizović","Ivica Matić","Hajrudin Krvavac"].map(n=>["Bosnia and Herzegovina",n,"dir","Bosnian feature cinema","Internationally awarded Bosnian filmmaker"]),
+["Bosnia and Herzegovina","Benjamin Filipović","dir","Holiday in Sarajevo (1991)",""],
+["Serbia","Dušan Makavejev","dir","WR: Mysteries of the Organism (1971)","Avant-garde pioneer of Yugoslav cinema"],
+["Serbia","Živojin Pavlović","dir","Black Wave classics","Key figure of the Yugoslav Black Wave"],
+["Serbia","Aleksandar Petrović","dir","I Even Met Happy Gypsies (1967)","Two Cannes awards; Oscar nomination"],
+["Serbia","Slobodan Šijan","dir","Who's Singin' Over There? (1980)",""],
+["Serbia","Srđan Dragojević","dir","We Are Not Angels (1992), The Wounds (1998)","Cult hits of Serbian cinema"],
+["Serbia","Goran Marković","dir","Tito and Me (1992)","Silver Shell for Best Director, San Sebastián"],
+["Serbia","Stefan Arsenijević","dir","Love and Other Crimes (2008), Strahinja Banović","Best Serbian Film, Cinema City 2008"],
+["Serbia","Srdan Golubović","dir","Circles (2013)",""],
+["Serbia","Mila Turajlić","dir","Cinema Komunisto, The Other Side of Everything",""],
+["Serbia","Lazar Ristovski","act","Underground, The White Suit (also dir.)",""],
+...[["Milena Dravić","Sky Hook"],["Mirjana Joković","Underground, The Hornet"],["Nebojša Glogovac","Sky Hook"],["Branka Katić","The Wounds"],["Dragan Bjelogrlić","The Wounds"],["Velimir 'Bata' Živojinović","The White Suit"],["Dragan Nikolić","The White Suit"],["Anica Dobra","Tito and Me"],["Slavko Štimac","Underground"],["Ana Sofrenović","Sky Hook"],["Sergej Trifunović","The Hornet"]].map(a=>["Serbia",a[0],"act",a[1],""]),
+["Croatia","Nebojša Slijepčević","dir","The Man Who Could Not Remain Silent (2024)","Short Film Palme d'Or, Cannes 2024"],
+["Croatia","Arsen Maas","dir","Brcko u Zagrebu (1917)","First full-length Croatian film"],
+["Croatia","Branko Marjanović","dir","Straža na Drini (1943)","Golden Lion, Venice"],
+["Croatia","Branko Bauer","dir","Ne okreći se, sine (1956), Tri Ane (1959), Licem u lice (1963)",""],
+["Croatia","Nikola Tanhofer","dir","H8 (1958)",""],
+["Croatia","Vatroslav Mimica","dir","Prometej s otoka Viševice (1965)","Zagreb School of Animation, then features"],
+["Croatia","Zvonimir Berković","dir","Rondo (1966)",""],
+["Croatia","Ante Babaja","dir","Breza (1967)",""],
+["Croatia","Krešo Golik","dir","Tko pjeva zlo ne misli (1970)","Classic Croatian comedies"],
+["Croatia","Krsto Papić","dir","Lisice (1969)",""],
+["Croatia","Lordan Zafranović","dir","Okupacija u 26 slika (1978), Pad Italije (1981)","Screened at Cannes"],
+["Croatia","Rajko Grlić","dir","Samo jednom se ljubi (1981)","Cannes competition"],
+["Croatia","Zoran Tadić","dir","Ritam zločina (1981), Treći ključ (1983)",""],
+["Croatia","Vinko Brešan","dir","How the War Started on My Island (1997), Marshal Tito's Spirit (1999), Witnesses (2003)","Berlinale competition"],
+["Croatia","Zrinko Ogresta","dir","Here (2003)","Award at Karlovy Vary"],
+["Croatia","Arsen A. Ostojić","dir","A Wonderful Night in Split (2004)","European Discovery nomination, EFA"],
+["Croatia","Ognjen Sviličić","dir","Sorry for Kung Fu (2004), Armin (2006)","FIPRESCI prize; Croatia's 2008 Oscar submission"],
+["Croatia","Vlado Kristl","dir","Don Kihot (animation)","Banned; left Croatia in the early 1960s"],
+["Croatia","Mira Furlan","act","Croatian and international film and TV",""],
+["Croatia","Milan Blažeković","dir","The Elm-Chanted Forest, Lapitch the Little Shoemaker","Directed the region's animated features"],
+["Montenegro","Dušan Vukotić","dir","Surogat (1961)","First Yugoslav Oscar winner (animated short)"],
+["Montenegro","Živko Nikolić","dir","Ljepota poroka (1986)","Leading Montenegrin auteur"],
+["Montenegro","Marija Perović","dir","Packing the Monkeys, Again!; Watch Me",""],
+["Montenegro","Nikola Vukčević","dir","A View from the Eiffel Tower (2005)",""],
+["Montenegro","Vladimir Popović","dir","There's No Resurrection Without Death",""],
+["Montenegro","Nemanja Bečanović","dir","The Ascent (2016)",""],
+["North Macedonia","Janaki & Milton Manaki","dir","First films shot in Bitola","Founding fathers of Macedonian cinema"],
+["North Macedonia","Vojislav Nanović","dir","Frosina (1952)","First Macedonian feature film"],
+["North Macedonia","Stole Popov","dir","Gypsy Magic (1997)",""],
+["North Macedonia","Ivan Mitevski","dir","Vreme, zivot (1992)",""],
+["North Macedonia","Branko Gapo","dir","Macedonian Saga (1993)","First Macedonian independent film"],
+["North Macedonia","Dimitrie Osmanli","dir","Angel Waste (1995)",""],
+["Bulgaria","Vasil Gendov","dir","Bulgaran is Gallant (1915)","Founder of Bulgarian cinema"],
+["Bulgaria","Rangel Vulchanov","dir","Aesop (1970)","Notable Bulgarian director"],
+["Bulgaria","Christo Christov","dir","Bulgarian auteur cinema","Notable Bulgarian director"],
+["Bulgaria","Georgi Djulgerov","dir","The Cooper (1970)","Grand Prize, Oberhausen"],
+["Bulgaria","Donyo Donev","dir","Animation","Pioneer of Bulgarian animation"],
+["Bulgaria","Nevena Kokanova","act","Perilous Flight",""],
+["Bulgaria","Georgi Kaloyanchev","act","Aesop (1970)",""],
+["Bulgaria","Stoyanka Mutafova","act","Aesop (1970)",""],
+["Romania","Sergiu Nicolaescu","dir","Romanian historical epics",""],
+...["Victor Rebengiuc","Draga Olteanu","Amza Pellea","Florin Piersic","Ion Caramitru","Maia Morgenstern","Sebastian Papaiani","Dem Rădulescu"].map(n=>["Romania",n,"act","Romanian cinema classics",""]),
+["Greece","Michael Cacoyannis","dir","Windfall in Athens (1954), Zorba the Greek (1964)","Zorba is the highest-grossing Greek film"],
+["Greece","George Tzavellas","dir","The Drunkard (1950)","Golden age of Greek cinema"],
+["Greece","Orestis Laskos","dir","Daphnis and Chloe (1931)","First Greek film shown abroad"],
+["Greece","Costa-Gavras","dir","Z (1969), Missing (1982)","Palme d'Or 1982"],
+["Greece","Katina Paxinou","act","For Whom the Bell Tolls (1943)","Academy Award, Best Supporting Actress"],
+["Slovenia","Karol Grossmann","dir","First Slovene film recordings (1905)","Slovenian film pioneer"],
+["Slovenia","Jože Gale","dir","Kekec (1951)","Golden Lion for youth film, Venice"],
+...["France Štiglic","Igor Pretnar","Jože Pogačnik","Matjaž Klopčič","Boštjan Hladnik","Peter Zobec","Bojan Stupica"].map(n=>["Slovenia",n,"dir","Slovenian feature cinema","Established Slovenian filmmaker"]),
+["Slovenia","Ita Rina","act","Early European cinema","Slovenian star of the silent era"],
+["Slovenia","Metka Bučar","act","Slovenian cinema",""],
+["Slovenia","Polde Bibič","act","Slovenian film, TV and radio drama","Leading post-war actor"]
+);
+// Albanian detail pass — individual Wikipedia articles, Nov 2026
+const UPD={
+"Piro Milkani":["The Lady from the City / Zonja nga qyteti (1976), Shembja e idhujve (1977), Shoqja nga fshati (1980), Ballë për ballë (1979, co-dir.)","Leading director of classic Albanian cinema"],
+"Kadri Roshi":["Tana (1958), General Gramafoni (1978), Ballë për ballë (1979), Red Poppies on Walls (1976), Kolonel Bunker (1996)","People's Artist; c. 215 stage and screen roles"],
+"Robert Ndrenika":["Horizonte të hapura (1968), Shtigje të luftës (1974), Shembja e idhujve (1977), Shoqja nga fshati (1980), Përrallë nga e kaluara (1987)","People's Artist; Honor of the Nation"],
+"Bujar Lako":["General Gramafoni (1978), Ballë për ballë (1979), Nëntori i dytë (1982), The Return of the Dead Army (1989), Amsterdam Express","Hundreds of lead roles on stage and screen"],
+"Sandër Prosi":["Nëntori i dytë (1982) as Ismail Qemali","People's Artist; one of the greatest actors of 20th-century Albanian cinema"],
+"Naim Frashëri":["Tana (1958)","People's Artist; famed Othello and Hamlet"],
+"Edmond Budina":["Dollia e dasmës sime (1978); dir. Letters in the Wind, Balkan Bazaar (2011)","Actor, director and writer"],
+"Nik Xhelilaj":["The Sorrow of Mrs. Schneider, The Albanian (2010), Rise of Empires: Ottoman","Several Best Actor awards at international festivals"],
+"Tinka Kurti":["Tana (1958) title role; 50+ features over 60 years","People's Artist"],
+"Violeta Manushi":["The Lady from the City (1976) as Teto Ollga, Shoqja nga fshati (1980), Tana","People's Artist"],
+"Luli Bitri":["Amnesty (2011)","Actress, director, screenwriter, producer"],
+"Rajmonda Bulku":["The Lady from the City (1976), Shoqja nga fshati (1980), The Return of the Dead Army (1989), Amsterdam Express",""],
+"Yllka Mujo":["The Lady from the City (1976), The Albanian (2010), Honeymoons (2009)",""],
+"Margarita Xhepa":["Ne dhe Lenini, Lulëkuqet mbi mure, Tana","People's Artist; icon of Albanian screen and stage"],
+"Marie Logoreci":["Tana (1958)","People's Artist"],
+"Melpomeni Çobani":["Tana (1958)","People's Artist"],
+"Pjetër Gjoka":["Tana (1958) as the grandfather","People's Artist"],
+"Pandi Raidhi":["Tana (1958), The Lady from the City (1976)","People's Artist"],
+"Sulejman Pitarka":["General Gramafoni (1978)","People's Artist; actor and playwright"],
+"Reshat Arbana":["General Gramafoni (1978), Nëntori i dytë (1982) as Isa Boletini","People's Artist"],
+"Ndrek Luca":["The Silent Duel (1967)","People's Artist"],
+"Skënder Sallaku":["Albanian comedy film and stage","People's Artist"],
+"Albert Vërria":["Kapedani (1972) as Xha Sulo",""],
+"Agim Qirjaqi":["Red Poppies on Walls (1976), Kolonel Bunker (1996) as Muro Neto",""],
+"Vasillaq Vangjeli":["The Lady from the City (1976)",""],
+"Ndriçim Xhepa":["The Return of the Dead Army (1989)",""],
+"Liza Vorfi":["The Return of the Dead Army (1989)",""],
+"Blerim Destani":["Amsterdam Express",""],
+"Flonja Kodheli":["Amsterdam Express",""]
+};
+PPL.forEach(p=>{const k=Object.keys(UPD).find(k=>p[0]=="Albania"&&p[1].startsWith(k));if(k){p[3]=UPD[k][0];if(UPD[k][1])p[4]=UPD[k][1]}});
+PPL.push(
+["Albania","Dhimitër Anagnosti (1936–2025)","dir","Njeriu kurrë nuk vdes (1961, with V. Gjika), The Silent Duel (1967), Red Poppies on Walls (1976), A Tale from the Past (1987), The Return of the Dead Army (1989)","People's Artist; Honor of the Nation; Minister of Culture 1992–94"],
+["Albania","Viktor Gjika (1937–2009)","dir","Komisari i dritës (1966, co-dir.), The Man with the Cannon (1977), General Gramafoni (1978), Nëntori i dytë (1982)","People's Artist (1985)"],
+["Albania","Ibrahim Muçaj (1944–2010)","dir","Liri a vdekje (1979, with K. Mitro), Apasionata (1983, with K. Mitro), feature films and documentaries","Merited Artist (1987); Order “Naim Frashëri”; head of Albafilm 1995–97"],
+["Albania","Rikard Ljarja (1943–2020)","act","Rrugë të bardha (1974) as Deda, Komisari i dritës (1966), The Silent Duel (1967), Ndërgjegjja (1972); dir. Radiostacioni","25+ feature films as actor, 11 as director"],
+["Albania","Roza Anagnosti","act","The Return of the Dead Army (1989)","People's Artist"],
+["Albania","Kristaq Mitro (1945–2023)","dir","Kur zbardhi një ditë (1971, asst.), Dimri i fundit, Liri a vdekje (1979) and Apasionata (1983) with I. Muçaj, Duaje emrin tënd (1984), Telefoni i një mëngjesi (1987), Një djalë edhe një vajzë (1990)","Merited Artist (1987); taught film directing at the University of Arts"],
+["Albania","Besnik Bisha (b. 1958)","dir","Bolero (1997), Mao Tse Tung (2007)","Award at the Albanian National Film Festival; Mao Tse Tung in Moscow IFF 2008"],
+["Albania","Vladimir Prifti (1942–2023)","dir","The General of the Dead Army (1976, TV), Udha e shkronjave (1978), Era e ngrohtë e thellësive (1982), Kush vdes në këmbë (1984), Dhe vjen një ditë (1986), Flutura në kabinën time, Dasma e Sakos (1998)","Merited Artist; Butrinti won at the Kiel Archaeological Film Festival"],
+["Albania","Spartak Pecani (b. 1952)","dir","Streha e re (1977), Erdhëm nga lufta (1979), Koha e largët (1983), Mos hesht (1985), Treni niset në shtatë pa pesë (1988), Bolero në vilën e pleqve (2022)","Prizes at the 6th and 7th Albanian Film Festivals"]
+);
+PPL.find(p=>p[1]=="Emir Kusturica")[4]="Two Palmes d'Or; Silver Bear (Arizona Dream); Silver Lion (Black Cat, White Cat)";
+PPL.find(p=>p[1]=="Margarita Xhepa")[1]="Margarita Xhepa (1932–2025)";
+const UPD2={
+"Luan Qerimi":["Shembja e idhujve (1977), Nëntori i dytë (1982), Dasma e shtyrë (1985), Të paftuarit","Merited Artist (1989); noted Othello and Hamlet on stage"],
+"Dhimitër Orgocka":["Horizonte të hapura (1968), Yjet e netëve të gjata (1972), Gjeneral Gramafoni (1978), Asgjë nuk harrohet, Dasëm e çuditëshme (1986)","People's Artist; actor and director, Andon Zako Çajupi Theatre"],
+"Agim Shuka":["Oshtimë në bregdet (1966), Në fillim të verës (1975), Vajzat me kordele të kuqe (1978), Nëntori i dytë (1982), Një djalë edhe një vajzë (1990)",""],
+"Aleko Prodani":["Dy herë mat (1986), Zëvendësi i grave (1987)","Merited Artist; Mjeshtër i Madh (posthumous)"],
+"Andon Qesari":["Ngadhnjim mbi vdekjen (1967), Gjurma (1970), Në fillim të verës (1975), Pylli i lirisë (1976), Ata ishin katër (1977), Tela për violinë (1987)","Merited Artist"],
+"Llazi Sërbo":["Yjet e netëve të gjata (1972), Operacioni Zjarri (1973), Nusja dhe shtetrrethimi (1978), Gracka (1984), Kush vdes në këmbë (1984)","Merited Artist (1991); c. 100 roles"],
+"Roland Trebicka":["Debatik (1961), Koncert në vitin 1936 (1978), Ëndërr për një karrige (1984), Pallati 176 as Jovan Bregu","Merited Artist"],
+"Esat Teliti":["Yjet e netëve të gjata (1972), Korierët (1976, first Albanian TV film); RTSH documentaries","Actor turned TV director and producer"],
+"Pjetër Malota":["Double Impact (1991), Universal Soldier (1992), Nowhere to Run (1993); dir. Kill 'Em All (2017)","Action actor and stunt coordinator in Hollywood"],
+"Ilir Jaçellari":["ACAB – All Cops Are Bastards, Balancing Act, Imma Tataranni (TV)","Actor, painter and photographer, working in Italy"],
+"Laert Vasili":["Agon, Balkan Bazaar, Tomorrow Is Another Day, The Miracle of the Sargasso Sea","Actor and director, Albania and Greece"],
+"Orli Shuka":["Hyena (2014), Gangs of London (TV) as Luan Dushaj, All the Old Knives, Den of Thieves 2","British-Albanian actor; son of Agim Shuka"],
+"Drita Pelingu":["Tana (1958), Gjenerali i ushtrisë së vdekur (1976), Njeriu me top (1977), Vajzat me kordele të kuqe (1978), Kur hidheshin themelet (1978), Sekretet (2008)","People's Artist and Merited Artist"],
+"Esma Agolli":["Fëmijët e saj (1957), Tana (1958), Mysafiri (1979), Përtej mureve të gurta (1979), Fletë të bardha (1990)","People's Artist; 60+ roles"],
+"Ferial Alibali":["100+ stage roles, National Theatre","Co-founder of the Aleksandër Moisiu Theatre, Durrës"],
+"Antoneta Papapavli":["Komisari i dritës (1966), Përballimi (1976), Tinguj lufte (1976), Përtej mureve të gurta (1979), Shoqja nga fshati (1980), Si gjithë të tjerët (1981)",""],
+"Merita Sokoli":["Takim në liqen (1943)","First Albanian film actress; soprano"],
+"Kristaq Dhamo":["Fortuna (1959, with Y. Ozerov), Tana (1958), Detyrë e posaçme (1963), Gjurma (1970), Nga mesi i errësirës (1978), Qortimet e vjeshtës (1981), Vendimi (1984)","People's Artist (1987); Career Award, 11th Albanian Film Festival"]
+};
+PPL.forEach(p=>{const k=Object.keys(UPD2).find(k=>p[0]=="Albania"&&p[1].startsWith(k));if(k){p[3]=UPD2[k][0];if(UPD2[k][1])p[4]=UPD2[k][1]}});
+const DEAD=["Merita Sokoli","Piro Milkani","Kristaq Dhamo","Gjergj Xhuvani","Xhanfise Keko","Viktor Stratoberdha","Endri Keko","Ibrahim Muçaj","Bekim Fehmiu","Faruk Begolli","Enver Petrovci","Azem Shkreli","Ekrem Kryeziu","Besim Sahatçiu","Veljko Bulajić","Dušan Vukotić","Živko Nikolić","Dušan Makavejev","Živojin Pavlović","Aleksandar Petrović","Goran Paskaljević","Milena Dravić","Nebojša Glogovac","Velimir 'Bata' Živojinović","Dragan Nikolić","Mira Furlan","Arsen Maas","Branko Marjanović","Branko Bauer","Nikola Tanhofer","Vatroslav Mimica","Zvonimir Berković","Ante Babaja","Krešo Golik","Krsto Papić","Zoran Tadić","Vlado Kristl","Milan Blažeković","Janaki & Milton Manaki","Vojislav Nanović","Vasil Gendov","Rangel Vulchanov","Christo Christov","Donyo Donev","Nevena Kokanova","Georgi Kaloyanchev","Stoyanka Mutafova","Sergiu Nicolaescu","Amza Pellea","Draga Olteanu","Ion Caramitru","Sebastian Papaiani","Dem Rădulescu","Theo Angelopoulos","Michael Cacoyannis","George Tzavellas","Orestis Laskos","Melina Mercouri","Irene Papas","Katina Paxinou","Karol Grossmann","Jože Gale","France Štiglic","Igor Pretnar","Jože Pogačnik","Matjaž Klopčič","Boštjan Hladnik","Bojan Stupica","Ita Rina","Polde Bibič","Metka Bučar"];
+PPL.forEach(p=>{let n=p[1];const m=n.match(/\s*\(([^)]*)\)\s*$/);let dead=false;if(m&&/\d/.test(m[1])){dead=/\d{4}\s*[–-]\s*\d{4}/.test(m[1]);n=n.replace(m[0],"")}if(DEAD.includes(n))dead=true;p[1]=n+(dead?" †":"")});
+let sc="All",pc="All",pr="all";
+const MO=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MOsq=["Jan","Shk","Mar","Pri","Maj","Qer","Kor","Gus","Sht","Tet","Nën","Dhj"];
+let fc="All",ec="All",em=0,lang="en";
+const T={sq:{tk:"LAJME",pN:"persona të shfaqur · të dhëna nga Wikipedia",nSch:"Shkollat",nPpl:"Njerëzit",sT:"Shkollat e filmit",sS:"Akademi publike dhe programe universitare filmi në çdo vend.",pT:"Njerëzit e kinemasë ballkanike",pS:"Regjisorë dhe aktorë që e çuan rajonin në ekranin botëror, me veprat dhe nderimet kryesore.",nFund:"Financimi",nInc:"Stimujt",nIntl:"Ndërkombëtare",nFest:"Festivalet",nSub:"Dërgo",h1:"Një kuadër.<br><em>Njëmbëdhjetë industri filmi.</em>",hp:"Udhëzuesi i plotë për të bërë film në Ballkan: kush financon, ku të prezantosh projektin, ku të studiosh, cilat festivale të synosh dhe njerëzit që i dhanë formë kinemasë së rajonit.",s1:"vende",s2:"fonde e qendra filmi",s3:"festivale e tregje",fT:"Fondet dhe institucionet kombëtare",fS:"Institucionet publike që financojnë filmin në çdo vend. Filtro sipas vendit.",iT:"Stimujt për prodhim",iS:"Rimbursime dhe skema tatimore për xhirime në rajon.",iN:"Përqindjet dhe tavanet ndryshojnë shpesh. Verifiko gjithmonë faqen zyrtare para se të ndërtosh planin financiar.",tC:"Vendi",tR:"Skema",tM:"Përqindja",tL:"Info zyrtare",xT:"Financimi ndërkombëtar dhe rajonal",xS:"Fonde bashkëprodhimi, forume prezantimi dhe tregje të hapura për kineastët ballkanikë.",eT:"Kalendari i festivaleve",eS:"Festivalet kryesore në 11 vendet. Zgjidh muajin ose vendin.",eN:"Muajt janë periudha e zakonshme. Datat e sakta dhe afatet shpallen nga çdo festival çdo vit.",tF:"Festivali",tW:"Kur",tFo:"Fokusi",cT:"Së shpejti",cS:"Seksione në ndërtim për versionin e ardhshëm.",c1:"Shkollat e filmit",c1d:"Akademi dhe universitete sipas vendit, programe, si të aplikosh.",c2:"Njerëzit",c2d:"Regjisorë, aktorë, producentë dhe operatorë me filmografi.",c3:"Arritjet",c3d:"Çmime festivalesh, kandidime për Oscar.",c4:"Harta dhe adresat",c4d:"Institucione, shkolla, studio dhe festivale në një hartë.",uT:"Shto një institucion",uS:"Drejton një festival, shkollë apo fond që mungon? Na dërgo të dhënat.",uB:"Dërgo",fo:"Të dhënat nga burime zyrtare; verifiko thirrjet aktuale te çdo institucion."}};
+const EN={};document.querySelectorAll("[data-i]").forEach(e=>EN[e.dataset.i]=e.innerHTML);
+const all=()=>lang=="sq"?"Të gjitha":"All";
+function chips(id,cur,set){const el=document.getElementById(id);el.innerHTML="";["All",...C].forEach(c=>{const b=document.createElement("button");b.className="chip"+(c==cur?" on":"");b.textContent=c=="All"?all():c;b.onclick=()=>set(c);el.appendChild(b)})}
+function rFund(){chips("cFund",fc,c=>{fc=c;rFund()});document.getElementById("gFund").innerHTML=FUND.filter(f=>fc=="All"||f[0]==fc).map(f=>`<div class="card"><div class="c">${f[0]}</div><h3>${f[1]}</h3>${f[2]?`<div class="row">${f[2]}</div>`:""}<div class="row"><b>${lang=="sq"?"Mbështet":"Supports"}:</b> ${f[3]}</div><div class="row"><b>${lang=="sq"?"Selia":"Based in"}:</b> ${f[4]}</div>${f[5]?`<a class="go" href="${f[5]}" target="_blank" rel="noopener">${f[5].replace(/https?:\/\/(www\.)?/,"")} →</a>`:""}</div>`).join("")}
+function rInc(){document.getElementById("tInc").innerHTML=INC.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td><b>${r[2]}</b></td><td>${r[3]?`<a href="${r[3]}" target="_blank" rel="noopener">${lang=="sq"?"Faqja":"Website"}</a>`:"—"}</td></tr>`).join("")}
+function rIntl(){document.getElementById("gIntl").innerHTML=INTL.map(r=>`<div class="card"><div class="c">${r[2]}</div><h3>${r[0]}</h3><div class="row">${r[1]}</div><a class="go" href="${r[3]}" target="_blank" rel="noopener">${lang=="sq"?"Vizito":"Visit"} →</a></div>`).join("")}
+function rFest(){const M=lang=="sq"?MOsq:MO;const mb=document.getElementById("mBtns");mb.innerHTML="";[...M].forEach((m,i)=>{const b=document.createElement("button");b.textContent=m;if(em==i+1)b.className="on";b.onclick=()=>{em=em==i+1?0:i+1;rFest()};mb.appendChild(b)});chips("cFest",ec,c=>{ec=c;rFest()});
+const rows=FEST.filter(f=>(ec=="All"||f[1]==ec)&&(!em||f[2]==em)).sort((a,b)=>a[2]-b[2]);
+document.getElementById("tFest").innerHTML=rows.length?rows.map(f=>`<tr><td><b>${f[0]}</b></td><td>${f[1]}</td><td>${M[f[2]-1]}</td><td>${f[3]}</td></tr>`).join(""):`<tr><td colspan="4" style="color:var(--mute)">${lang=="sq"?"Asnjë festival për këtë filtër.":"No festivals for this filter."}</td></tr>`}
+function setLang(l){lang=l;document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.l==l));document.querySelectorAll("[data-i]").forEach(e=>{const k=e.dataset.i;e.innerHTML=(l=="sq"&&T.sq[k])||EN[k]});document.documentElement.lang=l;rAll()}
+function rSch(){chips("cSch",sc,c=>{sc=c;rSch()});document.getElementById("gSch").innerHTML=SCH.filter(f=>sc=="All"||f[0]==sc).map(f=>`<div class="card"><div class="c">${f[0]} · ${f[4]}</div><h3>${f[1]}</h3>${f[2]?`<div class="row">${f[2]}</div>`:""}<div class="row"><b>${lang=="sq"?"Programet":"Programmes"}:</b> ${f[3]}</div>${f[5]?`<a class="go" href="${f[5]}" target="_blank" rel="noopener">${f[5].replace(/https?:\/\/(www\.)?/,"")} →</a>`:""}</div>`).join("")}
+function rPpl(){const R={all:lang=="sq"?"Të gjithë":"Everyone",dir:lang=="sq"?"Regjisorë":"Directors",act:lang=="sq"?"Aktorë":"Actors"};const el=document.getElementById("cRole");el.innerHTML="";Object.keys(R).forEach(k=>{const b=document.createElement("button");b.className="chip"+(k==pr?" on":"");b.textContent=R[k];b.onclick=()=>{pr=k;rPpl()};el.appendChild(b)});
+chips("cPpl",pc,c=>{pc=c;rPpl()});
+document.getElementById("gPpl").innerHTML=PPL.filter(p=>(pc=="All"||p[0]==pc)&&(pr=="all"||p[2]==pr)).map(p=>`<div class="card"><div class="c">${p[0]} · ${p[2]=="dir"?(lang=="sq"?"Regjisor":"Director"):(lang=="sq"?"Aktor":"Actor")}</div><h3><a href="https://${["Albania","Kosovo"].includes(p[0])?"sq":"en"}.wikipedia.org/w/index.php?search=${encodeURIComponent(p[1].replace(" †",""))}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dotted var(--acc)">${p[1]} ↗</a></h3><div class="row"><b>${lang=="sq"?"Vepra kryesore":"Key works"}:</b> ${p[3]}</div>${p[4]?`<div><span class="tag">★ ${p[4]}</span></div>`:""}</div>`).join("")||`<p style="color:var(--mute)">—</p>`;document.getElementById("pCount").textContent=document.getElementById("gPpl").children.length}
+function rAll(){rFund();rInc();rIntl();rFest();rSch();rPpl();document.getElementById("fC").innerHTML=`<option value="">${lang=="sq"?"Vendi":"Country"}</option>`+C.map(c=>`<option>${c}</option>`).join("")}
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+document.getElementById("f").onsubmit=e=>{e.preventDefault();const p=document.getElementById("fOk");p.style.display="block";p.textContent=lang=="sq"?"Faleminderit! Formulari do të lidhet me një adresë email-i në versionin e ardhshëm.":"Thanks! This form will be connected to an inbox in the next release.";e.target.reset()};
+document.getElementById("nInst").textContent=FUND.length;document.getElementById("nFestC").textContent=FEST.length;
+fetch("news.json?"+Date.now()).then(r=>r.json()).then(n=>{n.sort((a,b)=>b.date.localeCompare(a.date));document.getElementById("tk").innerHTML=n.map(i=>`<a href="${i.url}" target="_blank" rel="noopener"><b>${new Date(i.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</b>${i.text}</a>`).join("")}).catch(()=>{document.querySelector(".ticker").style.display="none"});
+rAll();
