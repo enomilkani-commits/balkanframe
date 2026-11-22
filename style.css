@@ -68,7 +68,7 @@ input[type=search]{background:var(--panel);border:1px solid var(--line);color:va
 @media(max-width:700px){.ticker .lab{min-width:0;font-size:11px;padding:8px}}
 .row.ct{font-size:13px}.row.ct a{color:var(--acc)}
 
-.recbtn{display:inline-flex;align-items:center;gap:16px;padding:10px 26px 10px 10px;border-radius:999px;background:#1a1815;border:1px solid #3a2a26;text-decoration:none;color:var(--ink);transition:.2s}
+.recbtn{display:inline-flex;align-items:center;gap:16px;padding:10px 26px 10px 10px;border-radius:999px;background:#1a1815;border:1px solid #3a2a26;text-decoration:none;color:var(--ink);transition:border-color .2s,box-shadow .2s,transform .2s}
 .recbtn:hover{border-color:#e0302a;box-shadow:0 0 0 4px rgba(224,48,42,.15)}
 .recdot{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff5a50,#d01e18 70%);box-shadow:0 0 0 4px #2a1412,0 0 18px rgba(224,48,42,.55);animation:recp 1.6s infinite}
 .rectx{display:flex;flex-direction:column;line-height:1.15}.rectx b{color:#ff4a40;letter-spacing:.2em;font-size:20px}.rectx small{color:var(--ink);font-size:15px}
@@ -162,3 +162,36 @@ a:focus-visible,button:focus-visible,.chip:focus-visible{outline:2px solid var(-
 @media (prefers-reduced-motion:reduce){a,button,.chip,.card,.btn,.recbtn,.logoimg,.fbadge,.herobadge{transition:none!important;transform:none!important}}
 a.btn,a.nlbtn{display:inline-block;background:var(--acc);color:#14110c!important;font-weight:600;padding:12px 22px;border-radius:999px;text-decoration:none;background-image:none}
 a.btn:hover,a.nlbtn:hover{color:#14110c!important;transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 8px 22px -8px rgba(232,163,61,.7)}
+
+/* ===== Accessibility & mobile fixes (web interface review, Nov 2026) ===== */
+html{color-scheme:dark;scroll-padding-top:calc(var(--hdr,0px) + 12px)}
+h1,h2,h3{text-wrap:balance}
+a,button,.chip,.card,summary{touch-action:manipulation;-webkit-tap-highlight-color:rgba(232,163,61,.25)}
+/* skip link: hidden until focused with the keyboard */
+.skip{position:absolute;left:12px;top:-80px;z-index:20;background:var(--acc);color:#14110c;padding:10px 16px;border-radius:6px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
+/* news ribbons: pause on keyboard focus and via the pause button */
+.ticker:focus-within .track,header.tkpaused .track{animation-play-state:paused}
+.tkp{flex:none;align-self:stretch;min-width:40px;background:rgba(0,0,0,.35);border:0;color:#fff;font-size:12px;cursor:pointer}
+.tkp:hover{background:rgba(0,0,0,.6)}
+.tkp:hover,.menubtn:hover{transform:none;filter:none;box-shadow:none}
+.tkp:focus-visible{outline-offset:-3px}
+.menubtn{display:none}
+@media (prefers-reduced-motion:reduce){
+ .ticker .track{animation:none;padding-left:14px}
+ .ticker>div{overflow-x:auto!important;scrollbar-width:thin}
+ .tkp{display:none}
+}
+@media(max-width:700px){
+ /* header no longer sticky on phones: it was 241px, ~29% of the screen */
+ header{position:static}
+ .nav{padding:10px 16px}
+ .menubtn{display:inline-flex;align-items:center;gap:8px;margin-left:auto;min-height:44px;padding:0 14px;background:none;border:1px solid var(--line);border-radius:8px;color:var(--ink);font:500 14px Inter,system-ui,sans-serif;cursor:pointer}
+ nav.links{display:none}
+ header.open nav.links{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;flex-basis:100%}
+ header.open nav.links a.l{display:flex;align-items:center;min-height:44px;font-size:15px;border-bottom:1px solid var(--line)}
+ header.open nav.links a.l::after{display:none}
+ /* stats as a tidy 2×2 grid instead of 3 + 1 */
+ .stats{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px}
+ .fnav a{display:inline-block;padding:8px 0}
+}

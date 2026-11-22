@@ -2,6 +2,7 @@
 const PAGES=[["index.html","Home","Kreu"],["funding.html","Funding","Financimi"],["coproduction.html","Co-production","Bashkëprodhimi"],["deadlines.html","Deadlines","Afatet"],["festivals.html","Festivals","Festivalet"],["schools.html","Schools","Shkollat"],["people.html","People","Njerëzit"],["achievements.html","Achievements","Arritjet"],["heritage.html","Heritage","Trashëgimia"],["locations.html","Locations","Lokacionet"],["directory.html","Directory","Drejtoria"],["community.html","Community","Komuniteti"],["guides.html","Guides","Udhëzues"],["map.html","Map","Harta"],["help.html","How to use","Si ta përdorësh"]];
 const here=(location.pathname.split("/").pop()||"index.html");
 let lang="en";
+let tkPaused=false;
 const L=(en,sq)=>lang=="sq"?sq:en;
 
 // ===== Film icons (line SVG) =====
@@ -37,9 +38,19 @@ function decorate(){
 
 function shell(){
  const h=document.getElementById("hdr");
- h.innerHTML=`<header><div class="nav"><a class="logo" href="index.html" aria-label="Balkan Frame — home"><img src="img/logo-wide.png" alt="Balkan Frame" class="logoimg"></a><nav class="links">${PAGES.slice(1).map(p=>`<a class="l${p[0]==here?" on":""}" href="${p[0]}">${L(p[1],p[2])}</a>`).join("")}</nav></div>
- <div class="ticker"><span class="lab">${L("BALKANS","BALLKANI")}</span><div style="overflow:hidden;flex:1"><span class="track" id="tk"></span></div></div><div class="ticker t2"><span class="lab">${L("EUROPE & INDUSTRY","EUROPA & INDUSTRIA")}</span><div style="overflow:hidden;flex:1"><span class="track" id="tk2"></span></div></div></header>`;
- document.getElementById("ftr").innerHTML=`<footer><img src="img/badge.png" alt="Balkan Frame seal" class="fbadge"><a class="go" href="community.html#newsletter" style="display:inline-block;margin-bottom:12px">✉ Sign up for email alerts</a><div class="fnav">${PAGES.map(p=>`<a href="${p[0]}">${L(p[1],p[2])}</a>`).join(" · ")}</div>© 2026 Balkan Frame · Tirana · <a href="https://docs.google.com/forms/d/e/1FAIpQLSccCVAYtEFCzBowDv8tppKrXqDyqptGF5bFyISzH1mLAQ4zXA/viewform" target="_blank" rel="noopener">Contact us</a> · ${L("Data compiled from official sources, trade press and Wikipedia; check each institution for current calls.","Të dhëna nga burime zyrtare, shtypi i industrisë dhe Wikipedia; verifiko thirrjet aktuale te çdo institucion.")}</footer>`;
+ h.innerHTML=`<header><div class="nav"><a class="logo" href="index.html" aria-label="Balkan Frame — home"><img src="img/logo-wide.png" alt="Balkan Frame" class="logoimg" width="470" height="120"></a><button type="button" class="menubtn" aria-expanded="false" aria-controls="mainnav"><span aria-hidden="true">☰</span>${L("Menu","Menu")}</button><nav class="links" id="mainnav">${PAGES.slice(1).map(p=>`<a class="l${p[0]==here?" on":""}" href="${p[0]}"${p[0]==here?' aria-current="page"':""}>${L(p[1],p[2])}</a>`).join("")}</nav></div>
+ <div class="ticker"><span class="lab">${L("BALKANS","BALLKANI")}</span><div style="overflow:hidden;flex:1"><span class="track" id="tk"></span></div><button type="button" class="tkp" aria-pressed="${tkPaused}" aria-label="${L("Pause news ribbons","Ndalo shiritat e lajmeve")}"><span aria-hidden="true">${tkPaused?"▶":"❚❚"}</span></button></div><div class="ticker t2"><span class="lab">${L("EUROPE & INDUSTRY","EUROPA & INDUSTRIA")}</span><div style="overflow:hidden;flex:1"><span class="track" id="tk2"></span></div></div></header>`;
+ const hd=h.querySelector("header"),mb=hd.querySelector(".menubtn"),tp=hd.querySelector(".tkp");
+ hd.classList.toggle("tkpaused",tkPaused);
+ // mobile menu: collapse the 14 links behind one button
+ mb.onclick=()=>{const o=hd.classList.toggle("open");mb.setAttribute("aria-expanded",o)};
+ hd.addEventListener("keydown",e=>{if(e.key=="Escape"&&hd.classList.contains("open")){hd.classList.remove("open");mb.setAttribute("aria-expanded","false");mb.focus()}});
+ // news ribbons: one pause/play control for both tickers
+ tp.onclick=()=>{tkPaused=!tkPaused;hd.classList.toggle("tkpaused",tkPaused);tp.setAttribute("aria-pressed",tkPaused);tp.firstChild.textContent=tkPaused?"▶":"❚❚"};
+ // keep anchor jumps and keyboard focus clear of the sticky header (0 when it isn't sticky)
+ const setH=()=>document.documentElement.style.setProperty("--hdr",(getComputedStyle(hd).position=="sticky"?hd.offsetHeight:0)+"px");
+ if(window.ResizeObserver)new ResizeObserver(setH).observe(hd);else setH();
+ document.getElementById("ftr").innerHTML=`<footer><img src="img/badge.png" alt="Balkan Frame seal" class="fbadge" width="360" height="360" loading="lazy"><a class="go" href="community.html#newsletter" style="display:inline-block;margin-bottom:12px">✉ Sign up for email alerts</a><div class="fnav">${PAGES.map(p=>`<a href="${p[0]}">${L(p[1],p[2])}</a>`).join(" · ")}</div>© 2026 Balkan Frame · Tirana · <a href="https://docs.google.com/forms/d/e/1FAIpQLSccCVAYtEFCzBowDv8tppKrXqDyqptGF5bFyISzH1mLAQ4zXA/viewform" target="_blank" rel="noopener">Contact us</a> · ${L("Data compiled from official sources, trade press and Wikipedia; check each institution for current calls.","Të dhëna nga burime zyrtare, shtypi i industrisë dhe Wikipedia; verifiko thirrjet aktuale te çdo institucion.")}</footer>`;
  document.querySelectorAll(".lang button").forEach(b=>{b.classList.toggle("on",b.dataset.l==lang);b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem("bf-lang",lang)}catch(e){}render()}});
  fetch("news.json?"+Date.now()).then(r=>r.json()).then(n=>{n.sort((a,b)=>b.date.localeCompare(a.date));const item=i=>`<a href="${i.url}" target="_blank" rel="noopener"><b>${new Date(i.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</b>${i.text}</a>`;[["tk","balkan"],["tk2","europe"]].forEach(([id,c])=>{const its=n.filter(i=>(i.cat||"balkan")==c);const el=document.getElementById(id);if(its.length)el.innerHTML=its.map(item).join("");else el.closest(".ticker").style.display="none"})}).catch(()=>{document.querySelectorAll(".ticker").forEach(t=>t.style.display="none")});
  document.querySelectorAll("[data-en]").forEach(e=>e.innerHTML=L(e.dataset.en,e.dataset.sq||e.dataset.en));
@@ -150,7 +161,7 @@ function rIntvPage(){const el=$("intvPage");if(!el)return;const id=location.hash
  el.innerHTML=`<div style="display:flex;gap:20px;align-items:center;margin-bottom:20px">${ph(x,96)}<div><div class="c">${x.type=="interview"?"Interview":"Profile"} · ${x.country} · ${new Date(x.date).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}</div><h1 style="margin:4px 0">${x.name}</h1><div class="row">${x.role}</div></div></div>`+
  x.body.map(([t,s])=>t=="h"?`<h2>${s}</h2>`:t=="q"?`<p><b>${s}</b></p>`:`<p>${s}</p>`).join("")+
  (x.links.length?`<div class="row" style="margin-top:20px">${x.links.map(l=>`<a class="wl" href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join(" · ")}</div>`:"")+
- `<div style="display:flex;align-items:center;gap:14px;margin-top:28px"><img src="img/badge.png" alt="Balkan Frame" style="width:64px;height:64px"><a class="go" href="community.html#interviews">← All interviews & profiles</a></div>`}
+ `<div style="display:flex;align-items:center;gap:14px;margin-top:28px"><img src="img/badge.png" alt="Balkan Frame" width="64" height="64" loading="lazy"><a class="go" href="community.html#interviews">← All interviews & profiles</a></div>`}
 window.addEventListener("hashchange",rIntvPage);
 
 // ===== Map =====
