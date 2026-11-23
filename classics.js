@@ -34,7 +34,7 @@ const CLASSICS=[
 ];
 // Official archives / platforms where classics of each country can be watched or requested
 const WATCH={
-"Albania":["Central State Film Archive (AQSHF)","https://aqshf.gov.al","Restored Kinostudio films; links to its official YouTube channel"],
+"Albania":["Central State Film Archive (AQSHF)","https://aqshf.gov.al","Restored Kinostudio films; links to its official YouTube channel",["NewWay Movies — Kinemaja Shqiptare (YouTube)","https://www.youtube.com/@KinemajaShqiptareOfficial","Classic Albanian films online; the channel states it is licensed by the film authors"]],
 "Bosnia and Herzegovina":["Cinematheque of Bosnia and Herzegovina","https://www.kinotekabih.ba","National film archive"],
 "Bulgaria":["Bulgarian National Film Archive","https://bnf.bg","About 15,000 titles"],
 "Croatia":["Croatian Cinematheque","https://www.hda.hr","Part of the Croatian State Archives"],
