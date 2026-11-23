@@ -3,14 +3,16 @@ Runs daily in GitHub Actions. Keeps older items for 60 days; never deletes every
 import json, re, html, datetime as dt, urllib.request, xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 
+G = "https://news.google.com/rss/search?hl=en&gl=US&ceid=US:en&q="
 FEEDS = [
-    "https://cineuropa.org/en/rss/",
     "https://www.filmneweurope.com/news?format=feed&type=rss",
-    "https://www.screendaily.com/47.rss",
-    "https://www.screendaily.com/news/rss",
-    "https://www.sff.ba/en/rss",
-    "https://www.filmfestival.gr/en/feed",
-    "https://dokufest.com/feed",
+    G + "%22Sarajevo+Film+Festival%22+when:7d",
+    G + "Balkan+film+festival+award+when:7d",
+    G + "Albanian+OR+Kosovo+film+festival+when:7d",
+    G + "Serbian+OR+Croatian+OR+Bosnian+film+when:7d",
+    G + "Romanian+OR+Bulgarian+OR+Greek+film+award+when:7d",
+    G + "Eurimages+OR+%22Creative+Europe+MEDIA%22+OR+EAVE+when:7d",
+    G + "%22European+Film+Awards%22+OR+Berlinale+when:7d",
 ]
 BALKAN = ["albania", "albanian", "tirana", "kosovo", "prishtina", "pristina", "prizren", "dokufest",
     "bosnia", "bosnian", "sarajevo", "serbia", "serbian", "belgrade", "croatia", "croatian", "zagreb",
