@@ -207,3 +207,5 @@ a,button,.chip,.card,summary{touch-action:manipulation;-webkit-tap-highlight-col
 .tly{flex:none;width:52px;font:700 18px Fraunces,serif;color:var(--acc)}.tlc{font-size:12px;color:var(--mute);margin-left:6px;text-transform:uppercase;letter-spacing:.06em}
 
 .ticker.t3{background:#2a1f0c}.ticker.t3 .lab{background:#d4a24c;color:#14110c}.ticker.t3 .track{animation-duration:90s}
+
+.potd{margin:0;padding:0;overflow:hidden}.potd img{width:100%;max-height:560px;object-fit:contain;background:#0a0908;display:block}.potd figcaption{padding:16px 20px}.potdc{font-size:12px;color:var(--mute)}

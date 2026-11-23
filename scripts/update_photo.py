@@ -3,7 +3,7 @@ only free licences (public domain / CC), and save it with its credit to photo.js
 import json, random, re, urllib.request, urllib.parse, datetime as dt
 API="https://commons.wikimedia.org/w/api.php"
 UA={"User-Agent":"BalkanFrame photo bot (https://balkanframe.com; halosgraphic@gmail.com)"}
-CATS=["Manaki brothers","Cinema of Albania","Cinema of Yugoslavia","Cinema of Greece","Cinema of Romania",
+CATS=["Manaki brothers","Yanaki and Milton Manaki","Milton Manaki","Manakis brothers","Photographs by Manaki brothers","Cinema of Albania","Cinema of Yugoslavia","Cinema of Greece","Cinema of Romania",
  "Cinema of Bulgaria","Cinema of Serbia","Cinema of Croatia","Cinema of Slovenia","Cinema of North Macedonia",
  "Cinema of Bosnia and Herzegovina","Cinema of Montenegro","Cinema of Kosovo","Kinostudio Shqipëria e Re",
  "Avala Film","Jadran Film","Boyana Film","Buftea film studios","Film directors from Yugoslavia","Actors from Yugoslavia",

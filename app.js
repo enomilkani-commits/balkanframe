@@ -222,3 +222,10 @@ function rHistory(){const t=document.getElementById("histTimeline");if(!t||typeo
   p.innerHTML=`<h3>${k}</h3><div class="row">${x[2]}</div><p><a class="btn nlbtn" href="${x[1]}" target="_blank" rel="noopener">${k=="Albania"?"▶ Watch online":"Watch / request films"}: ${x[0]} ↗</a></p>${k=="Albania"?`<p><a class="btn nlbtn" href="${YT_EN}" target="_blank" rel="noopener">EN Albanian films with English subtitles (playlist) ↗</a></p>`:""}${x[3]?`<div class="row" style="font-size:13px;color:var(--mute)">Archive: <a class="wl" href="${x[3][1]}" target="_blank" rel="noopener">${x[3][0]} ↗</a> — ${x[3][2]}</div>`:""}${films.length?`<div class="row" style="margin-top:10px"><b>Classics from ${k} on this page:</b> ${films.map(c=>`<a class="wl" href="${k=="Albania"?YT_AL+encodeURIComponent(c[2]):wsearch(c[1]+" "+c[0])}" target="_blank" rel="noopener">${k=="Albania"?"▶ ":""}${c[1]} (${c[0]})</a>`).join(" · ")}</div>`:""}`};
  w.querySelectorAll("button").forEach(b=>b.onclick=()=>show(b.dataset.k));show("Albania")}
 document.addEventListener("DOMContentLoaded",()=>{rClassic();rHistory()});if(document.readyState!="loading"){rClassic();rHistory()}
+
+// Photo of the day (Wikimedia Commons, free licence)
+(function(){const s=document.getElementById("photoday");if(!s)return;fetch("photo.json?"+Date.now()).then(r=>r.ok?r.json():null).then(p=>{if(!p||!p.img)return;
+ const im=document.getElementById("potdImg");im.src=p.img;im.alt=p.title;document.getElementById("potdLink").href=p.page;
+ document.getElementById("potdYear").textContent=p.year;document.getElementById("potdTitle").textContent=p.title;
+ const lic=p.licenseUrl?`<a class="wl" href="${p.licenseUrl}" target="_blank" rel="noopener">${p.license}</a>`:p.license;
+ document.getElementById("potdCredit").innerHTML=`Photo: ${p.author} · ${lic} · <a class="wl" href="${p.page}" target="_blank" rel="noopener">Wikimedia Commons</a>`;s.style.display=""}).catch(()=>{})})();
