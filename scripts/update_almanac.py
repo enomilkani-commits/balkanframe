@@ -31,7 +31,7 @@ def main():
                     link=(pages[0].get("content_urls",{}).get("desktop",{}) or {}).get("page","")
                 text=t.strip().rstrip(".")
                 if kind!="events":
-                    text=f"{text} {label}" if "(" not in text else re.sub(r"\s*\(([^)]*)\)\s*$","",text)+f", {label}"
+                    text=text.rstrip(",")+("," if not text.endswith(",") else "")+f" {label}"
                 out.append([d.month,d.day,y,text[:200],link])
         print("ok",d)
     seen=set();res=[]
