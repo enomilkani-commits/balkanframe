@@ -205,3 +205,5 @@ a,button,.chip,.card,summary{touch-action:manipulation;-webkit-tap-highlight-col
 .timeline{border-left:2px solid #5a4520;margin-left:8px;padding-left:22px}.tl{display:flex;gap:16px;margin:0 0 18px;position:relative}
 .tl::before{content:"";position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--acc)}
 .tly{flex:none;width:52px;font:700 18px Fraunces,serif;color:var(--acc)}.tlc{font-size:12px;color:var(--mute);margin-left:6px;text-transform:uppercase;letter-spacing:.06em}
+
+.ticker.t3{background:#2a1f0c}.ticker.t3 .lab{background:#d4a24c;color:#14110c}.ticker.t3 .track{animation-duration:90s}
