@@ -32,6 +32,7 @@ const CLASSICS=[
 [1995,"Underground","Underground","Emir Kusturica","Serbia","Kusturica's second Palme d'Or"],
 [1998,"Eternity and a Day","Μια αιωνιότητα και μια μέρα","Theo Angelopoulos","Greece","Palme d'Or, Cannes 1998"]
 ];
+const YT_EN="https://www.youtube.com/playlist?list=PLSuBYEvhw1pD12ATEQ4IOdLARCY5XkRwP";
 const YT_AL="https://www.youtube.com/@KinemajaShqiptareOfficial/search?query=";
 // Official archives / platforms where classics of each country can be watched or requested
 const WATCH={
