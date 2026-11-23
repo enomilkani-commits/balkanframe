@@ -224,7 +224,7 @@ function rHistory(){const t=document.getElementById("histTimeline");if(!t||typeo
 document.addEventListener("DOMContentLoaded",()=>{rClassic();rHistory()});if(document.readyState!="loading"){rClassic();rHistory()}
 
 // Photo of the day (Wikimedia Commons, free licence)
-(function(){const s=document.getElementById("photoday");if(!s)return;fetch("photo.json?"+Date.now()).then(r=>r.ok?r.json():null).then(p=>{if(!p||!p.img)return;
+(function(){const s=document.getElementById("photoday");if(!s)return;fetch("photo.json?"+Date.now()).then(r=>r.ok?r.json():null).then(p=>{if(p&&p.photos&&p.photos.length){p=p.photos[Math.floor(Date.now()/864e5)%p.photos.length]}if(!p||!p.img)return;
  const im=document.getElementById("potdImg");im.src=p.img;im.alt=p.title;document.getElementById("potdLink").href=p.page;
  document.getElementById("potdYear").textContent=p.year;document.getElementById("potdTitle").textContent=p.title;
  const lic=p.licenseUrl?`<a class="wl" href="${p.licenseUrl}" target="_blank" rel="noopener">${p.license}</a>`:p.license;

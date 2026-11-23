@@ -1,7 +1,7 @@
 name: Update news ribbons
 on:
   schedule:
-    - cron: "43 5 * * *"   # every day 06:43 Central European Time
+    - cron: "43 5 * * 1"   # every Monday 06:43 Central European Time
   workflow_dispatch: {}     # "Run workflow" button for a manual update
 permissions:
   contents: write

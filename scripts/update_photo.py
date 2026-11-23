@@ -31,7 +31,9 @@ def main():
     for c in CATS: 
         f=files_in(c);print(c,len(f));titles+=f
     titles=list(dict.fromkeys(titles));random.seed(dt.date.today().isoformat());random.shuffle(titles)
-    for i in range(0,min(len(titles),400),40):
+    picks=[]
+    for i in range(0,min(len(titles),800),40):
+        if len(picks)>=7: break
         batch=titles[i:i+40]
         r=q({"action":"query","titles":"|".join(batch),"prop":"imageinfo","iiprop":"url|extmetadata|size","iiurlwidth":"1200"})
         for p in r.get("query",{}).get("pages",[]):
@@ -46,7 +48,8 @@ def main():
             res={"date":dt.date.today().isoformat(),"year":int(m.group(1)),"title":desc,"img":ii.get("thumburl") or ii.get("url"),
                  "page":ii.get("descriptionurl"),"author":strip(md.get("Artist",{}).get("value",""))[:120] or "Unknown",
                  "license":lic,"licenseUrl":strip(md.get("LicenseUrl",{}).get("value",""))}
-            json.dump(res,open("photo.json","w",encoding="utf-8"),ensure_ascii=False,indent=1)
-            print("picked",res["year"],res["title"][:80],res["license"]);return
-    print("no suitable photo; keeping previous")
+            picks.append(res);print("picked",res["year"],res["title"][:80],res["license"])
+            if len(picks)>=7: break
+    if not picks: print("no suitable photo; keeping previous");return
+    json.dump({"photos":picks},open("photo.json","w",encoding="utf-8"),ensure_ascii=False,indent=1)
 if __name__=="__main__": main()
