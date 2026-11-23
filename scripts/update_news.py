@@ -86,7 +86,10 @@ def main():
             elif screen and film and not any(w in t for w in ["box office", "us ", "hollywood", "netflix", "india", "china", "korea", "japan"]): cat = "europe"
             elif any(k in t for k in EUROPE_STRICT) and (film or "berlinale" in t or "eurimages" in t or "eave" in t): cat = "europe"
             else: cat = None
-            if cat: fresh.append({"date": d.isoformat(), "text": clean(title), "url": link.strip(), "cat": cat})
+            if cat:
+                item = {"date": d.isoformat(), "text": clean(title), "url": link.strip(), "cat": cat}
+                if screen: item["src"] = "screen"
+                fresh.append(item)
         print("ok", f, len(items))
     seen, merged = set(), []
     for x in fresh + old:
@@ -102,7 +105,14 @@ def main():
         if age > 60: continue
         seen.add(key); merged.append(x)
     merged.sort(key=lambda x: x["date"], reverse=True)
-    result = [x for x in merged if x["cat"] == "balkan"][:15] + [x for x in merged if x["cat"] == "europe"][:15]
+    eu, n_screen = [], 0
+    for x in merged:
+        if x["cat"] != "europe": continue
+        if x.get("src") == "screen":
+            if n_screen >= 7: continue
+            n_screen += 1
+        eu.append(x)
+    result = [x for x in merged if x["cat"] == "balkan"][:15] + eu[:15]
     result.sort(key=lambda x: x["date"], reverse=True)
     if not result:
         print("nothing to write; keeping the old file"); return
