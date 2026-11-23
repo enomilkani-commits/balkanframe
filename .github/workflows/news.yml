@@ -15,12 +15,13 @@ jobs:
           python-version: "3.12"
       - run: python scripts/update_news.py
       - run: python scripts/update_almanac.py || true
+      - run: python scripts/update_photo.py || true
       - name: Commit if changed
         run: |
-          git add -N almanac.json 2>/dev/null || true
-          if git diff --quiet news.json almanac.json; then echo "No changes"; exit 0; fi
+          git add -N almanac.json photo.json 2>/dev/null || true
+          if git diff --quiet news.json almanac.json photo.json; then echo "No changes"; exit 0; fi
           git config user.name "balkanframe-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add news.json almanac.json
+          git add news.json almanac.json photo.json
           git commit -m "Update news ribbons and almanac ($(date -u +%F))"
           git push
