@@ -195,3 +195,11 @@ function rMap(){const el=$("mapSvg");if(!el)return;const items=mItems().filter(i
 
 function render(){shell();rHome();rFund();rInc();rIntl();rCalc();rCopro();rDead();rFest();rSch();rLabs();rPpl();rAch();rHer();rLoc();rDir();rCom();rGuide();rIntv();rIntvPage();rMap();decorate()}
 render();
+
+// Newsletter: one-click sign-up via Netlify Forms
+document.querySelectorAll("form.nlform").forEach(f=>f.addEventListener("submit",e=>{e.preventDefault();
+ const msg=f.parentNode.querySelector(".nlmsg"),btn=f.querySelector("button");f.querySelector("[name=page]").value=location.pathname;
+ btn.disabled=true;btn.textContent="Signing up…";
+ fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(f)).toString()})
+ .then(r=>{if(!r.ok)throw 0;f.style.display="none";msg.textContent="✓ You're signed up. Thank you! Alerts will come to your inbox.";msg.style.color="var(--acc)"})
+ .catch(()=>{btn.disabled=false;btn.textContent="Sign up";msg.textContent="Something went wrong — please try again.";msg.style.color="#ff6b5e"})}));
