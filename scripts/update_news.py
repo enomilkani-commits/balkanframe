@@ -24,6 +24,12 @@ EUROPE = ["berlinale", "cannes", "venice", "karlovy vary", "locarno", "san sebas
     "efa", "lux audience", "eave", "eurimages", "creative europe", "media programme", "co-production",
     "coproduction", "market", "fund", "rebate", "incentive", "call for", "deadline", "rotterdam", "iffr",
     "cottbus", "les arcs", "torinofilmlab", "when east meets west"]
+FILMWORDS = ["film", "cinema", "festival", "director", "actor", "actress", "award", "documentary", "movie",
+    "screen", "premiere", "producer", "production", "series", "oscar", "golden", "jury", "shoot"]
+EUROPE_STRICT = ["berlinale", "cannes", "venice", "karlovy vary", "locarno", "san sebasti", "european film award",
+    "eurimages", "creative europe", "eave", "cinelink", "rotterdam", "iffr", "les arcs", "cottbus", "lux audience",
+    "torinofilmlab", "european film academy"]
+BLOCK = ["putin", "gta", "tourism", "football", "election", "war ", "stock", "crypto", "tamil", "vietnam", "australian"]
 UA = {"User-Agent": "Mozilla/5.0 (BalkanFrame news bot; +https://balkanframe.com)"}
 
 def fetch(url):
@@ -69,14 +75,22 @@ def main():
             if not title or not link or not link.startswith("http"): continue
             d = date_of(pub)
             if not d or (today - d).days > 10 or d > today + dt.timedelta(days=1): continue
-            text = (title + " " + (desc or "")).lower()
-            cat = "balkan" if any(k in text for k in BALKAN) else ("europe" if any(k in text for k in EUROPE) else None)
+            t = title.lower()
+            if any(b in t for b in BLOCK): continue
+            film = any(w in t for w in FILMWORDS)
+            fne = "filmneweurope" in link
+            if (film or fne) and any(k in t for k in BALKAN): cat = "balkan"
+            elif any(k in t for k in EUROPE_STRICT) and (film or "berlinale" in t or "eurimages" in t or "eave" in t): cat = "europe"
+            else: cat = None
             if cat: fresh.append({"date": d.isoformat(), "text": clean(title), "url": link.strip(), "cat": cat})
         print("ok", f, len(items))
     seen, merged = set(), []
     for x in fresh + old:
+        x["text"] = re.sub(r"\s+-\s+[^-]{2,40}$", "", x["text"]).strip()
         key = x["url"].split("?")[0].rstrip("/")
-        if key in seen: continue
+        tkey = re.sub(r"[^a-z0-9]", "", x["text"].lower())[:60]
+        if key in seen or tkey in seen: continue
+        seen.add(tkey)
         try:
             age = (today - dt.date.fromisoformat(x["date"])).days
         except Exception:
