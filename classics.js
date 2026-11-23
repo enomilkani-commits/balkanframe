@@ -32,9 +32,10 @@ const CLASSICS=[
 [1995,"Underground","Underground","Emir Kusturica","Serbia","Kusturica's second Palme d'Or"],
 [1998,"Eternity and a Day","Μια αιωνιότητα και μια μέρα","Theo Angelopoulos","Greece","Palme d'Or, Cannes 1998"]
 ];
+const YT_AL="https://www.youtube.com/@KinemajaShqiptareOfficial/search?query=";
 // Official archives / platforms where classics of each country can be watched or requested
 const WATCH={
-"Albania":["Central State Film Archive (AQSHF)","https://aqshf.gov.al","Restored Kinostudio films; links to its official YouTube channel",["NewWay Movies — Kinemaja Shqiptare (YouTube)","https://www.youtube.com/@KinemajaShqiptareOfficial","Classic Albanian films online; the channel states it is licensed by the film authors"]],
+"Albania":["NewWay Movies — Kinemaja Shqiptare (YouTube)","https://www.youtube.com/@KinemajaShqiptareOfficial","Classic Albanian films to watch online, free on YouTube",["Central State Film Archive (AQSHF)","https://aqshf.gov.al","The state archive that keeps and restores the Kinostudio films (no online viewing)"]],
 "Bosnia and Herzegovina":["Cinematheque of Bosnia and Herzegovina","https://www.kinotekabih.ba","National film archive"],
 "Bulgaria":["Bulgarian National Film Archive","https://bnf.bg","About 15,000 titles"],
 "Croatia":["Croatian Cinematheque","https://www.hda.hr","Part of the Croatian State Archives"],
