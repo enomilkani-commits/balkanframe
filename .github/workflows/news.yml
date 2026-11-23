@@ -1,0 +1,24 @@
+name: Update news ribbons
+on:
+  schedule:
+    - cron: "43 5 * * *"   # every day 06:43 Central European Time
+  workflow_dispatch: {}     # "Run workflow" button for a manual update
+permissions:
+  contents: write
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/update_news.py
+      - name: Commit if changed
+        run: |
+          if git diff --quiet news.json; then echo "No changes"; exit 0; fi
+          git config user.name "balkanframe-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news.json
+          git commit -m "Update news ribbons ($(date -u +%F))"
+          git push
