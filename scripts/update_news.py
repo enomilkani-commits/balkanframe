@@ -13,6 +13,8 @@ FEEDS = [
     G + "Romanian+OR+Bulgarian+OR+Greek+film+award+when:7d",
     G + "Eurimages+OR+%22Creative+Europe+MEDIA%22+OR+EAVE+when:7d",
     G + "%22European+Film+Awards%22+OR+Berlinale+when:7d",
+    G + "site:screendaily.com+when:3d",
+    G + "site:screendaily.com+Balkan+OR+Serbia+OR+Croatia+OR+Romania+OR+Greece+OR+Albania+OR+Kosovo+OR+Bosnia+OR+Bulgaria+when:14d",
 ]
 BALKAN = ["albania", "albanian", "tirana", "kosovo", "prishtina", "pristina", "prizren", "dokufest",
     "bosnia", "bosnian", "sarajevo", "serbia", "serbian", "belgrade", "croatia", "croatian", "zagreb",
@@ -79,7 +81,9 @@ def main():
             if any(b in t for b in BLOCK): continue
             film = any(w in t for w in FILMWORDS)
             fne = "filmneweurope" in link
-            if (film or fne) and any(k in t for k in BALKAN): cat = "balkan"
+            screen = "screen international" in t or "screen daily" in t or "screendaily" in link
+            if (film or fne or screen) and any(k in t for k in BALKAN): cat = "balkan"
+            elif screen and film and not any(w in t for w in ["box office", "us ", "hollywood", "netflix", "india", "china", "korea", "japan"]): cat = "europe"
             elif any(k in t for k in EUROPE_STRICT) and (film or "berlinale" in t or "eurimages" in t or "eave" in t): cat = "europe"
             else: cat = None
             if cat: fresh.append({"date": d.isoformat(), "text": clean(title), "url": link.strip(), "cat": cat})
